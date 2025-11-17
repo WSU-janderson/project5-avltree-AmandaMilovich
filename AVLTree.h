@@ -6,8 +6,6 @@
 #define AVLTREE_H
 #include <string>
 
-using namespace std;
-
 class AVLTree {
 public:
     using KeyType = std::string;
@@ -24,20 +22,15 @@ protected:
         AVLNode* right;
 
         // 0, 1 or 2
-        size_t numChildren() const;
+        [[nodiscard]] size_t numChildren() const;
         // true or false
-        bool isLeaf() const;
+        [[nodiscard]] bool isLeaf() const;
         // number of hops to deepest leaf node
-        size_t getHeight() const;
-
+        [[nodiscard]] size_t getHeight() const;
 
     };
 
 public:
-
-
-
-
     private:
     AVLNode* root;
 
@@ -45,10 +38,13 @@ public:
     // this overloaded remove will do the recursion to remove the node
     bool remove(AVLNode*& current, KeyType key);
     // removeNode contains the logic for actually removing a node based on the numebr of children
+    bool addNode(AVLNode* node);
+
+    bool addNode(AVLNode *node, AVLNode *&current);
+
     bool removeNode(AVLNode*& current);
     // You will implement this, but it is needed for removeNode()
     void balanceNode(AVLNode*& node);
-
 };
 
 #endif //AVLTREE_H

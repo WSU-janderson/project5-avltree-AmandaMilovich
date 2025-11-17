@@ -58,9 +58,58 @@ bool AVLTree::removeNode(AVLNode*& current){
     return true;
 }
 
+
+bool AVLTree::addNode(AVLNode* node) {
+    if (root == nullptr) {
+        root = node;
+        root->left = nullptr;
+        root->right = nullptr;
+        return true;
+    }
+
+    if (root == node)
+        return false;
+
+    if (node > root->right) {
+        if (!root->right) {
+            root->right = node;
+            return true;
+        }
+
+        return addNode(node, root->right);
+
+    }
+    if (!root->left) {
+        root->left = node;
+        return true;
+    }
+    return addNode(node,   root->left);
+}
+
+bool AVLTree::addNode(AVLNode* node, AVLNode*& current) {
+
+    if (node == current)
+        return false;
+
+    if (node > current) {
+        if (!current->right) {
+            current->right = node;
+            return true;
+        }
+        return addNode(node, current->right);
+    }
+    if (!current->left) {
+        current->left = node;
+        return true;
+    }
+    return addNode(node, current->left);
+}
+
 bool AVLTree::remove(AVLNode *&current, KeyType key) {
     return false;
 }
+
+
 
 void AVLTree::balanceNode(AVLNode *&node) {
 }
