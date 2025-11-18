@@ -14,6 +14,10 @@ size_t AVLTree::AVLNode::getHeight() const {
     return 0;
 }
 
+void updateHeight(AVLNode* node) {
+
+}
+
 bool AVLTree::removeNode(AVLNode*& current){
     if (!current) {
         return false;
