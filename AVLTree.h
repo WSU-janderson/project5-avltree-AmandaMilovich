@@ -1,5 +1,5 @@
 /**
- * AVLTree.h
+* AVLTree.h
  */
 
 #ifndef AVLTREE_H
@@ -28,15 +28,25 @@ protected:
         // number of hops to deepest leaf node
         [[nodiscard]] size_t getHeight() const;
 
+        AVLNode(KeyType key, ValueType value) {
+            this->key = key;
+            this->value = value;
+            this->height = 0;
+            this->left = nullptr;
+            this->right = nullptr;
+        };
     };
 
 public:
-    private:
+private:
     AVLNode* root;
 
     /* Helper methods for remove */
     // this overloaded remove will do the recursion to remove the node
     bool remove(AVLNode*& current, KeyType key);
+
+    void insert(std::string key, size_t value);
+
     // removeNode contains the logic for actually removing a node based on the numebr of children
     bool addNode(AVLNode* node);
 

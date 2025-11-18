@@ -83,13 +83,15 @@ bool AVLTree::addNode(AVLNode* node) {
         root->left = node;
         return true;
     }
-    return addNode(node,   root->left);
+    return addNode(node,root->left);
 }
 
 bool AVLTree::addNode(AVLNode* node, AVLNode*& current) {
 
     if (node == current)
         return false;
+
+    node->height = node->getHeight();
 
     if (node > current) {
         if (!current->right) {
@@ -109,7 +111,10 @@ bool AVLTree::remove(AVLNode *&current, KeyType key) {
     return false;
 }
 
-
+void AVLTree::insert(std::string key, size_t value) {
+    AVLNode *newNode = new AVLNode(key, value);
+    addNode(newNode);
+}
 
 void AVLTree::balanceNode(AVLNode *&node) {
 }
