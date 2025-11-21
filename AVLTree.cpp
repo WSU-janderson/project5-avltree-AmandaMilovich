@@ -1,21 +1,33 @@
 #include "AVLTree.h"
+#include "AVLTree.h"
 
+#include <ios>
 #include <string>
+#include <bits/ios_base.h>
 
 size_t AVLTree::AVLNode::numChildren() const {
-    return 0;
+    size_t numChildren = 0;
+    if (this->left != nullptr)
+        numChildren++;
+    if (this->right != nullptr)
+        numChildren++;
+    return numChildren;
 }
 
 bool AVLTree::AVLNode::isLeaf() const {
-    return false;
+    return this->left == nullptr && this->right == nullptr;
 }
 
 size_t AVLTree::AVLNode::getHeight() const {
-    return 0;
+    if (this == nullptr)
+        return -1;
+    return height;
 }
 
-void updateHeight(AVLNode* node) {
-
+void updateHeight(AVLTree::AVLNode* node) {
+    size_t leftHeight = node->left->getHeight();
+    size_t rightHeight = node->right->getHeight();
+    node->height = std::max(leftHeight, rightHeight) + 1;
 }
 
 bool AVLTree::removeNode(AVLNode*& current){

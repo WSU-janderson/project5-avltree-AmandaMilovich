@@ -55,6 +55,8 @@ private:
     bool removeNode(AVLNode*& current);
     // You will implement this, but it is needed for removeNode()
     void balanceNode(AVLNode*& node);
+
+    friend void updateHeight(AVLNode* node);
 };
 
 #endif //AVLTREE_H
