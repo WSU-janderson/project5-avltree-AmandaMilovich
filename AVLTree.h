@@ -4,7 +4,9 @@
 
 #ifndef AVLTREE_H
 #define AVLTREE_H
+#include <optional>
 #include <string>
+#include <vector>
 
 class AVLTree {
 public:
@@ -38,14 +40,40 @@ protected:
     };
 
 public:
+    bool insert(const std::string& key, size_t value);
+
+    bool remove(const std::string& key);
+
+    bool contains(const std::string& key) const;
+
+    std::optional<size_t> get(const std::string& key) const;
+
+    size_t& operator[](const std::string& key);
+
+    std::vector<std::string> findRange(const std::string& lowKey, const std::string& highKey) const;
+
+    std::vector<std::string> keys() const;
+
+    size_t size() const;
+
+    size_t getHeight() const;
+
+    AVLTree(const AVLTree& other);
+
+    AVLTree& operator=(const AVLTree& other);
+
+    ~AVLTree();
+
+    friend std::ostream& operator<<(std::ostream& os, const AVLTree& tree);
+
+
+
 private:
     AVLNode* root;
 
     /* Helper methods for remove */
     // this overloaded remove will do the recursion to remove the node
     bool remove(AVLNode*& current, KeyType key);
-
-    void insert(std::string key, size_t value);
 
     // removeNode contains the logic for actually removing a node based on the numebr of children
     bool addNode(AVLNode* node);

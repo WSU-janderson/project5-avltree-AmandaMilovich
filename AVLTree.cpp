@@ -131,9 +131,45 @@ bool AVLTree::remove(AVLNode *&current, KeyType key) {
     return false;
 }
 
-void AVLTree::insert(std::string key, size_t value) {
+bool AVLTree::insert(const std::string& key, size_t value) {
     AVLNode *newNode = new AVLNode(key, value);
-    addNode(newNode);
+    return addNode(newNode);
+}
+
+bool AVLTree::remove(const std::string &key) {
+}
+
+bool AVLTree::contains(const std::string &key) const {
+}
+
+std::optional<size_t> AVLTree::get(const std::string &key) const {
+}
+
+size_t & AVLTree::operator[](const std::string &key) {
+}
+
+std::vector<std::string> AVLTree::findRange(const std::string &lowKey, const std::string &highKey) const {
+}
+
+std::vector<std::string> AVLTree::keys() const {
+}
+
+size_t AVLTree::size() const {
+}
+
+size_t AVLTree::getHeight() const {
+}
+
+AVLTree::AVLTree(const AVLTree &other) {
+}
+
+AVLTree & AVLTree::operator=(const AVLTree &other) {
+}
+
+AVLTree::~AVLTree() {
+}
+
+std::ostream & operator<<(std::ostream &os, const AVLTree &tree) {
 }
 
 void AVLTree::balanceNode(AVLNode *&node) {
