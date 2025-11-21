@@ -24,18 +24,18 @@ size_t AVLTree::AVLNode::getHeight() const {
     return height;
 }
 
-void updateHeight(AVLTree::AVLNode* node) {
+void updateHeight(AVLTree::AVLNode *node) {
     size_t leftHeight = node->left->getHeight();
     size_t rightHeight = node->right->getHeight();
     node->height = std::max(leftHeight, rightHeight) + 1;
 }
 
-bool AVLTree::removeNode(AVLNode*& current){
+bool AVLTree::removeNode(AVLNode *&current) {
     if (!current) {
         return false;
     }
 
-    AVLNode* toDelete = current;
+    AVLNode *toDelete = current;
     auto nChildren = current->numChildren();
     if (current->isLeaf()) {
         // case 1 we can delete the node
@@ -51,7 +51,7 @@ bool AVLTree::removeNode(AVLNode*& current){
         // case 3 - we have two children,
         // get smallest key in right subtree by
         // getting right child and go left until left is null
-        AVLNode* smallestInRight = current->right;
+        AVLNode *smallestInRight = current->right;
         // I could check if smallestInRight is null,
         // but it shouldn't be since the node has two children
         while (smallestInRight->left) {
@@ -75,7 +75,7 @@ bool AVLTree::removeNode(AVLNode*& current){
 }
 
 
-bool AVLTree::addNode(AVLNode* node) {
+bool AVLTree::addNode(AVLNode *node) {
     if (root == nullptr) {
         root = node;
         root->left = nullptr;
@@ -93,17 +93,15 @@ bool AVLTree::addNode(AVLNode* node) {
         }
 
         return addNode(node, root->right);
-
     }
     if (!root->left) {
         root->left = node;
         return true;
     }
-    return addNode(node,root->left);
+    return addNode(node, root->left);
 }
 
-bool AVLTree::addNode(AVLNode* node, AVLNode*& current) {
-
+bool AVLTree::addNode(AVLNode *node, AVLNode *&current) {
     if (node == current)
         return false;
 
@@ -133,4 +131,23 @@ void AVLTree::insert(std::string key, size_t value) {
 }
 
 void AVLTree::balanceNode(AVLNode *&node) {
+    if (node->left->getHeight() - node->right->getHeight() >= 2) {
+        if (node->left->left->getHeight() - node->left->right->getHeight() == -1)
+            leftRotation(node->left);
+        rightRotation(node);
+    } else if (node->left->getHeight() - node->right->getHeight() <= -2)
+        if (node->right->left->getHeight() - node->right->right->getHeight() == 1)
+            rightRotation(node->right);
+    leftRotation(node);
+}
+
+void AVLTree::rightRotation(AVLNode *&node) {
+    AVLNode *hook = node->left;
+    node->left = hook->right;
+    hook->right = node;
+    node = hook;
+}
+
+
+void AVLTree::leftRotation(AVLNode *&node) {
 }

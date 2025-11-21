@@ -56,6 +56,10 @@ private:
     // You will implement this, but it is needed for removeNode()
     void balanceNode(AVLNode*& node);
 
+    void rightRotation(AVLNode *&node);
+
+    void leftRotation(AVLNode *&node);
+
     friend void updateHeight(AVLNode* node);
 };
 
