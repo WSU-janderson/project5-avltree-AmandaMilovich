@@ -128,7 +128,13 @@ bool AVLTree::addNode(AVLNode *node, AVLNode *&current) {
 
 
 bool AVLTree::remove(AVLNode *&current, KeyType key) {
-    return false;
+    if (current == nullptr)
+        return false;
+    if (current->key == key)
+        return removeNode(current);
+    if (current->key < key)
+        return remove(current->right, key);
+    return remove(current->left, key);
 }
 
 bool AVLTree::insert(const std::string& key, size_t value) {
@@ -137,6 +143,7 @@ bool AVLTree::insert(const std::string& key, size_t value) {
 }
 
 bool AVLTree::remove(const std::string &key) {
+    return remove(root, key);
 }
 
 bool AVLTree::contains(const std::string &key) const {
