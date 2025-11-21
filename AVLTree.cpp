@@ -167,21 +167,26 @@ std::vector<std::string> AVLTree::keys() const {
 }
 
 size_t AVLTree::size() const {
+    return numNodes;
 }
 
 size_t AVLTree::getHeight() const {
+    return root->getHeight();
 }
 
 AVLTree::AVLTree(const AVLTree &other) {
+    root = nullptr;
+    numNodes = other.numNodes;
+    cloneTree(root, other.root);
 }
 
 AVLTree & AVLTree::operator=(const AVLTree &other) {
     clear(root);
 
     root = nullptr;
-    numNodes = 0;
-
+    numNodes = other.numNodes;
     cloneTree(root, other.root);
+    return *this;
 }
 
 void AVLTree::cloneTree(AVLNode *&current, AVLNode *other) {
