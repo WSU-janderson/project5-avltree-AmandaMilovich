@@ -105,21 +105,27 @@ bool AVLTree::addNode(AVLNode *node, AVLNode *&current) {
     if (node == current)
         return false;
 
-    node->height = node->getHeight();
-
-    if (node > current) {
-        if (!current->right) {
-            current->right = node;
-            return true;
-        }
-        return addNode(node, current->right);
-    }
-    if (!current->left) {
-        current->left = node;
+    if (current == nullptr) {
+        current = node;
         return true;
     }
-    return addNode(node, current->left);
+
+    bool inserted = false;
+
+    if (node > current)
+        inserted = addNode(node, current->right);
+    else
+        inserted = addNode(node, current->left);
+
+    if (!inserted)
+        return false;
+
+    updateHeight(current);
+    balanceNode(current);
+
+    return inserted;
 }
+
 
 bool AVLTree::remove(AVLNode *&current, KeyType key) {
     return false;
@@ -148,6 +154,9 @@ void AVLTree::rightRotation(AVLNode *&node) {
     node = hook;
 }
 
-
 void AVLTree::leftRotation(AVLNode *&node) {
+    AVLNode *hook = node->right;
+    node->right = hook->left;
+    hook->left = node;
+    node = hook;
 }
