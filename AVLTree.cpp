@@ -139,7 +139,12 @@ bool AVLTree::remove(AVLNode *&current, KeyType key) {
 
 bool AVLTree::insert(const std::string& key, size_t value) {
     AVLNode *newNode = new AVLNode(key, value);
-    return addNode(newNode);
+
+    if (addNode(newNode)) {
+        numNodes++;
+        return true;
+    }
+    return false;
 }
 
 bool AVLTree::remove(const std::string &key) {
@@ -171,12 +176,36 @@ AVLTree::AVLTree(const AVLTree &other) {
 }
 
 AVLTree & AVLTree::operator=(const AVLTree &other) {
+    clear(root);
+
+    root = nullptr;
+    numNodes = 0;
+
+    cloneTree(root, other.root);
+}
+
+void AVLTree::cloneTree(AVLNode *&current, AVLNode *other) {
+    if (other == nullptr)
+        return;
+    current = new AVLNode(other->key, other->value);
+    cloneTree(current->left, other->left);
+    cloneTree(current->right, other->right);
 }
 
 AVLTree::~AVLTree() {
+    clear(root);
 }
 
 std::ostream & operator<<(std::ostream &os, const AVLTree &tree) {
+}
+
+void AVLTree::clear(AVLNode* currentNode) {
+    if (!currentNode) {
+        return;
+    }
+    clear(currentNode->left);
+    clear(currentNode->right);
+    delete currentNode;
 }
 
 void AVLTree::balanceNode(AVLNode *&node) {
