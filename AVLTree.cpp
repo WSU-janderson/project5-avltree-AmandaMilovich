@@ -137,7 +137,7 @@ bool AVLTree::remove(AVLNode *&current, KeyType key) {
     return remove(current->left, key);
 }
 
-bool AVLTree::insert(const std::string& key, size_t value) {
+bool AVLTree::insert(const std::string &key, size_t value) {
     AVLNode *newNode = new AVLNode(key, value);
 
     if (addNode(newNode)) {
@@ -157,13 +157,42 @@ bool AVLTree::contains(const std::string &key) const {
 std::optional<size_t> AVLTree::get(const std::string &key) const {
 }
 
-size_t & AVLTree::operator[](const std::string &key) {
+size_t &AVLTree::operator[](const std::string &key) {
 }
 
 std::vector<std::string> AVLTree::findRange(const std::string &lowKey, const std::string &highKey) const {
+    std::vector<std::string> keys;
+    addKeysRange(root, highKey, lowKey, keys);
 }
 
+void AVLTree::addKeysRange(AVLNode *node, const std::string &highKey, const std::string &lowKey,
+                           std::vector<std::string> &keys) const {
+    if (node == nullptr)
+        return;
+    if (lowKey <= node->key && node->key <= highKey) {
+        addKeysRange(node->left, highKey, lowKey, keys);
+        keys.push_back(node->key);
+        addKeysRange(node->right, highKey, lowKey, keys);
+    } else if (lowKey > node->key) {
+        addKeysRange(node->right, highKey, lowKey, keys);
+    } else if (highKey < node->key) {
+        addKeysRange(node->left, highKey, lowKey, keys);
+    }
+}
+
+
 std::vector<std::string> AVLTree::keys() const {
+    std::vector<std::string> keys;
+    addKeys(this->root, keys);
+    return keys;
+}
+
+void AVLTree::addKeys(AVLNode *node, std::vector<std::string> &keys) const {
+    if (node == nullptr)
+        return;
+    addKeys(node->left, keys);
+    keys.push_back(node->key);
+    addKeys(node->right, keys);
 }
 
 size_t AVLTree::size() const {
@@ -180,7 +209,7 @@ AVLTree::AVLTree(const AVLTree &other) {
     cloneTree(root, other.root);
 }
 
-AVLTree & AVLTree::operator=(const AVLTree &other) {
+AVLTree &AVLTree::operator=(const AVLTree &other) {
     clear(root);
 
     root = nullptr;
@@ -201,10 +230,10 @@ AVLTree::~AVLTree() {
     clear(root);
 }
 
-std::ostream & operator<<(std::ostream &os, const AVLTree &tree) {
+std::ostream &operator<<(std::ostream &os, const AVLTree &tree) {
 }
 
-void AVLTree::clear(AVLNode* currentNode) {
+void AVLTree::clear(AVLNode *currentNode) {
     if (!currentNode) {
         return;
     }

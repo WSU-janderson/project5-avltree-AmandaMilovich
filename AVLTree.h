@@ -97,6 +97,10 @@ private:
 
     void cloneTree(AVLNode*& currentNode, AVLNode* otherNode);
 
+    void addKeysRange(AVLNode* node, const std::string& highKey, const std::string& lowKey, std::vector<std::string>& keys) const;
+
+    void addKeys(AVLNode* node, std::vector<std::string>& keys) const;
+
     friend void updateHeight(AVLNode* node);
 };
 
