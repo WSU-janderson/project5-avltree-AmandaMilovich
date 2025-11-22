@@ -28,7 +28,7 @@ protected:
         // true or false
         [[nodiscard]] bool isLeaf() const;
         // number of hops to deepest leaf node
-        [[nodiscard]] size_t getHeight() const;
+        [[nodiscard]] static int getHeight(const AVLNode* node);
 
         AVLNode(KeyType key, ValueType value) {
             this->key = key;
@@ -50,13 +50,15 @@ public:
 
     size_t& operator[](const std::string& key);
 
-    std::vector<std::string> findRange(const std::string& lowKey, const std::string& highKey) const;
+    std::vector<size_t> findRange(const std::string& lowKey, const std::string& highKey) const;
 
     std::vector<std::string> keys() const;
 
     size_t size() const;
 
-    size_t getHeight() const;
+    int getHeight() const;
+
+    AVLTree();
 
     AVLTree(const AVLTree& other);
 
@@ -79,8 +81,6 @@ private:
 
     // removeNode contains the logic for actually removing a node based on the numebr of children
 
-    bool addNode(AVLNode* node);
-
     bool addNode(AVLNode *node, AVLNode *&current);
 
     bool removeNode(AVLNode*& current);
@@ -97,7 +97,7 @@ private:
 
     void cloneTree(AVLNode*& currentNode, AVLNode* otherNode);
 
-    void addKeysRange(AVLNode* node, const std::string& highKey, const std::string& lowKey, std::vector<std::string>& keys) const;
+    void addKeysRange(AVLNode* node, const std::string& highKey, const std::string& lowKey, std::vector<size_t>& values) const;
 
     void addKeys(AVLNode* node, std::vector<std::string>& keys) const;
 
@@ -108,6 +108,8 @@ private:
     size_t &getBrackets(const std::string &key, AVLNode *node);
 
     friend void updateHeight(AVLNode* node);
+
+    friend void printOperator(std::ostream &os, const AVLNode *node, int level);
 };
 
 #endif //AVLTREE_H
