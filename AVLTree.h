@@ -105,6 +105,8 @@ private:
 
     std::optional<size_t> get(const std::string &key, AVLNode *node) const;
 
+    size_t &getBrackets(const std::string &key, AVLNode *node);
+
     friend void updateHeight(AVLNode* node);
 };
 

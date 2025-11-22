@@ -152,8 +152,6 @@ bool AVLTree::remove(const std::string &key) {
 }
 
 bool AVLTree::contains(const std::string &key) const {
-    if (root == nullptr)
-        return false;
     return contains(key, root);
 }
 
@@ -168,8 +166,6 @@ bool AVLTree::contains(const std::string &key, AVLNode *node) const {
 }
 
 std::optional<size_t> AVLTree::get(const std::string &key) const {
-    if (root == nullptr)
-        return std::nullopt;
     return get(key, root);
 }
 
@@ -177,13 +173,24 @@ std::optional<size_t> AVLTree::get(const std::string &key, AVLNode *node) const 
     if (node == nullptr)
         return std::nullopt;
     if (node->key == key)
-        return node->value;
+        return std::make_optional(node->value);
     if (node->key > key)
         return get(key, node->left);
     return get(key, node->right);
 }
 
 size_t &AVLTree::operator[](const std::string &key) {
+    return getBrackets(key, root);
+}
+
+size_t &AVLTree::getBrackets(const std::string &key, AVLNode *node) {
+    if (node == nullptr)
+        throw std::invalid_argument("AVLTree::operator[]: Key not found");
+    if (node->key == key)
+        return node->value;
+    if (node->key > key)
+        return getBrackets(key, node->left);
+    return getBrackets(key, node->right);
 }
 
 std::vector<std::string> AVLTree::findRange(const std::string &lowKey, const std::string &highKey) const {
