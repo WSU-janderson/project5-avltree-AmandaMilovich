@@ -162,12 +162,25 @@ bool AVLTree::contains(const std::string &key, AVLNode *node) const {
         return false;
     if (node->key == key)
         return true;
-    if (node->key < key)
+    if (node->key > key)
         return contains(key, node->left);
     return contains(key, node->right);
 }
 
 std::optional<size_t> AVLTree::get(const std::string &key) const {
+    if (root == nullptr)
+        return std::nullopt;
+    return get(key, root);
+}
+
+std::optional<size_t> AVLTree::get(const std::string &key, AVLNode *node) const {
+    if (node == nullptr)
+        return std::nullopt;
+    if (node->key == key)
+        return node->value;
+    if (node->key > key)
+        return get(key, node->left);
+    return get(key, node->right);
 }
 
 size_t &AVLTree::operator[](const std::string &key) {

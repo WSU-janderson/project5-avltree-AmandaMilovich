@@ -103,6 +103,8 @@ private:
 
     bool contains(const std::string &key, AVLNode* node) const;
 
+    std::optional<size_t> get(const std::string &key, AVLNode *node) const;
+
     friend void updateHeight(AVLNode* node);
 };
 
