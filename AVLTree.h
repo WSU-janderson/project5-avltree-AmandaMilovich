@@ -1,5 +1,9 @@
 /**
-* AVLTree.h
+* Project: AVL Tree
+* Amanda Milovich
+* Program is an AVL Tree that uses strings as keys and size_ts as the value.
+* Program links nodes together similar to a singly-linked list and changes links between nodes
+* for rotations, insertions, and deletions.
  */
 
 #ifndef AVLTREE_H
