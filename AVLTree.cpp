@@ -152,6 +152,19 @@ bool AVLTree::remove(const std::string &key) {
 }
 
 bool AVLTree::contains(const std::string &key) const {
+    if (root == nullptr)
+        return false;
+    return contains(key, root);
+}
+
+bool AVLTree::contains(const std::string &key, AVLNode *node) const {
+    if (node == nullptr)
+        return false;
+    if (node->key == key)
+        return true;
+    if (node->key < key)
+        return contains(key, node->left);
+    return contains(key, node->right);
 }
 
 std::optional<size_t> AVLTree::get(const std::string &key) const {
@@ -179,7 +192,6 @@ void AVLTree::addKeysRange(AVLNode *node, const std::string &highKey, const std:
         addKeysRange(node->left, highKey, lowKey, keys);
     }
 }
-
 
 std::vector<std::string> AVLTree::keys() const {
     std::vector<std::string> keys;

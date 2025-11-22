@@ -101,6 +101,8 @@ private:
 
     void addKeys(AVLNode* node, std::vector<std::string>& keys) const;
 
+    bool contains(const std::string &key, AVLNode* node) const;
+
     friend void updateHeight(AVLNode* node);
 };
 
